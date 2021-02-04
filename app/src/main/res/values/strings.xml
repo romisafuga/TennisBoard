@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">TennisBoard</string>
+    <string name="txv_optjuepend">Match Continued</string>
+    <string name="txv_optjuenuevo">Match New</string>
+    <string name="txv_optjugadores">Tennis Players</string>
+    <string name="txv_optajustes">Settings</string>
+    <string name="txv_optestjuego">Match Records</string>
+    <string name="txv_optestjugador">Players Records</string>
+    <string name="txv_optayuda">Help</string>
+    <string name="txv_optacerca">About</string>
+    <string name="cnd_juegopend">Match Paused</string>
+    <string name="cnd_optjuenuevo">Match New</string>
+    <string name="cnd_optjugadores">Tennis Players</string>
+    <string name="cnd_optajustes">Settings</string>
+    <string name="cnd_optestjuego">Match Records</string>
+    <string name="cnd_optestjugador">Players Records</string>
+    <string name="cnd_optayuda">Help</string>
+    <string name="cnd_optacerca">About</string>
+    <string name="cnd_logo">Application Logo</string>
+    <string name="ald_jugadoresTit">Manage tennis players</string>
+    <string name="ald_jugadoresMes">indicate if you want to register a new tennis
+        player or want to select an existing one\n\n
+    You can also modify a tennis player from the select option</string>
+    <string name="ald_jugadoresNeg">Register</string>
+    <string name="ald_jugadoresPos">Select</string>
+    <string name="txv_registrojug">tennis player registration</string>
+    <string name="hint_tie_nombre">Tennis Player Name</string>
+    <string name="txv_genero">gender</string>
+    <string name="rdb_masculino">Male</string>
+    <string name="rdb_femenino">Female</string>
+    <string name="txv_brazo">Arm</string>
+    <string name="rdb_derecho">Right</string>
+    <string name="rdb_izquierdo">Left</string>
+    <string name="txv_foto">Photo</string>
+    <string name="btn_galeria">Gallery</string>
+    <string name="btn_foto">Camera</string>
+    <string name="ald_AlertJugadorMes">Check the data</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
