@@ -24,6 +24,8 @@
     <string name="ald_jugadoresNeg">Register</string>
     <string name="ald_jugadoresPos">Select</string>
     <string name="txv_registrojug">tennis player registration</string>
+    <string name="txv_modificajug">tennis player update</string>
+    <string name="txv_listadojug">tennis player consultation</string>
     <string name="hint_tie_nombre">Tennis Player Name</string>
     <string name="txv_genero">gender</string>
     <string name="rdb_masculino">Male</string>
@@ -35,6 +37,13 @@
     <string name="btn_galeria">Gallery</string>
     <string name="btn_foto">Camera</string>
     <string name="ald_AlertJugadorMes">Check the data</string>
+    <string name="toa_error_nombre">Name is missing</string>
+    <string name="toa_error_genero">Genre is missing</string>
+    <string name="toa_error_brazo">Arm is missing</string>
+    <string name="toa_error_foto">Photo is missing</string>
+    <string name="toa_error_getallnames">There are no registered tennis players</string>
+    <string name="toa_error_exgetallnames">List could not be retrieved</string>
+    <string name="pasajugador_error">Tennis Player is missing</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

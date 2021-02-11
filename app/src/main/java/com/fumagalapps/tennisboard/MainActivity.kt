@@ -3,42 +3,48 @@ package com.fumagalapps.tennisboard
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.fumagalapps.tennisboard.fragmentos.InicioFragment
 import com.fumagalapps.tennisboard.fragmentos.InicioFragment.*
+import com.fumagalapps.tennisboard.fragmentos.ListadoJugadorFragment
+import com.fumagalapps.tennisboard.fragmentos.RegistroJugadorFragment
 import com.fumagalapps.tennisboard.interfaces.IComunicaFragmentos
 import kotlinx.android.synthetic.main.fragment_inicio.*
 
 class MainActivity : AppCompatActivity(), IComunicaFragmentos {
 
-
+    var contenedor = R.id.frl_ContenedorFrag
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // asignacion de fragmento al contenedor
 
-        var contenedor = R.id.frl_ContenedorFrag
+
         supportFragmentManager.beginTransaction().replace(contenedor, InicioFragment()).commit()
 
     }
 
+
     // funcion para crear un AlertDialogo y regresarlo
     fun dialogoJugadores(): AlertDialog {
+
         var builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.ald_jugadoresTit)
                 .setMessage(R.string.ald_jugadoresMes)
                 .setNegativeButton(R.string.ald_jugadoresNeg,
                         DialogInterface.OnClickListener { dialog,
                                                           which ->
-                            Toast.makeText(this, "Registrar Jugador ",
-                                    Toast.LENGTH_SHORT).show()})
+                            supportFragmentManager.beginTransaction().
+                            replace(contenedor, RegistroJugadorFragment()).commit()})
                 .setPositiveButton(R.string.ald_jugadoresPos,
-                        DialogInterface.OnClickListener { dialog, which ->
-                            Toast.makeText(this, "Seleccionar Jugador ",
-                                    Toast.LENGTH_SHORT).show()})
+                        DialogInterface.OnClickListener { dialog,
+                                                          which ->
+                            supportFragmentManager.beginTransaction().
+                            replace(contenedor, ListadoJugadorFragment()).commit()})
         return builder.create()
     }
 
@@ -75,5 +81,13 @@ class MainActivity : AppCompatActivity(), IComunicaFragmentos {
         Toast.makeText(this, "acerca ", Toast.LENGTH_SHORT).show()
     }
 
+    override fun pasaJugador(idJug: String) {
+        val bundle = Bundle()
+        bundle.putString("idJug",idJug)
+        val transEditJug = this.supportFragmentManager.beginTransaction()
+        val RegJugFrag = RegistroJugadorFragment()
+        RegJugFrag.arguments = bundle
+        transEditJug.replace(contenedor,RegJugFrag).commit()
+    }
 
 }

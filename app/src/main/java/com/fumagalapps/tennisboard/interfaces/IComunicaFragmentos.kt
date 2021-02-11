@@ -19,4 +19,6 @@ interface IComunicaFragmentos {
     }
     open  fun acerca(){
     }
+    open fun pasaJugador(idJug : String){
+    }
 }

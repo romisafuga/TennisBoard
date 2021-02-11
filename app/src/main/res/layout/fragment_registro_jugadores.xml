@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmentos.JugadoresFragment" >
+    tools:context=".fragmentos.RegistroJugadorFragment" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                 android:id="@+id/imb_Atras"
                 android:layout_width="60dp"
                 android:layout_height="49dp"
+                android:background="@color/transparente"
                 android:src="@drawable/abc_vector_test" />
         </RelativeLayout>
 
@@ -62,7 +63,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/txv_Genero"
+            android:id="@+id/txv_ItemGenero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -94,7 +95,7 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/txv_Brazo"
+            android:id="@+id/txv_ItemBrazo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -140,9 +141,9 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imv_Foto"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:id="@+id/imv_ItemFoto"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:elevation="10dp"
                 android:src="@drawable/acercade" />
 
@@ -172,9 +173,61 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/continuar" />
+                android:background="@color/transparente"
+                android:src="@mipmap/ic_confirmacion" />
+
+
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fam_MenuAcciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        app:fab_addButtonColorNormal="?attr/colorAccent"
+        app:fab_addButtonColorPressed="?attr/colorAccent"
+        app:fab_addButtonSize="mini"
+        app:fab_expandDirection="up"
+        app:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Agregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="?attr/colorPrimaryDark"
+            app:fab_icon="@mipmap/ic_launcher"
+            app:fab_size="mini"
+            app:fab_title="@string/hint_tie_nombre"></com.getbase.floatingactionbutton.FloatingActionButton>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Confirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="?attr/colorPrimaryDark"
+            app:fab_icon="@mipmap/ic_confirmacion"
+            app:fab_size="mini"></com.getbase.floatingactionbutton.FloatingActionButton>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="?attr/colorPrimaryDark"
+            app:fab_icon="@mipmap/ic_confirmacion"
+            app:fab_size="mini"></com.getbase.floatingactionbutton.FloatingActionButton>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Borrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="?attr/colorPrimaryDark"
+            app:fab_icon="@mipmap/ic_confirmacion"
+            app:fab_size="mini"></com.getbase.floatingactionbutton.FloatingActionButton>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
 </RelativeLayout>
