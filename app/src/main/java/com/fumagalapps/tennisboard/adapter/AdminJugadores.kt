@@ -52,6 +52,45 @@ class AdminJugadores {
         }
     }
 
+    // Qry para traer un solo jugador
+    fun getName(intId: String): TbJugadores {
+        try {
+            val db = AppDBTennisBoard.DB!!.readableDatabase
+            // checamos si hay datos guardados
+            val numDatos = DatabaseUtils.queryNumEntries(db, AppDBTennisBoard.TB_Jugadores).toInt()
+            if (numDatos > 0) {
+                val qry =
+                    "SELECT ${AppDBTennisBoard.TB_Jugadores}.* FROM " +
+                            "${AppDBTennisBoard.TB_Jugadores} WHERE " +
+                            "${Tablas.TbJugadores.INTID} = ${intId};"
+                val registros = db.rawQuery(qry, null)
+                // nos ponemos al inicio de la tabla
+                registros.moveToFirst()
+                // llenamos el arreglo con los nombres obtenidos
+                var regId = registros.getInt(0)
+                var regNombre = registros.getString(1)
+                var regGenero = registros.getString(2)[0]
+                var regBrazo = registros.getString(3)[0]
+                var regFoto = registros.getString(4)
+                return TbJugadores(regId, regNombre, regGenero, regBrazo, regFoto)
+                registros.close()
+            } else {
+                Toast.makeText(
+                    AppDBTennisBoard.CONTEXTO, "No hay datos en la tabla",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return TbJugadores(0, "", ' ', ' ', "")
+            }
+        } catch (ex: Exception) {
+            Toast.makeText(
+                AppDBTennisBoard.CONTEXTO, "No se pudo recuperar la lista",
+                Toast.LENGTH_SHORT
+            ).show()
+            return TbJugadores(0, "", ' ', ' ', "")
+        }
+    }
+
+
     // Qry para insertar un contacto
     fun addJugador(jugador: TbJugadores) {
         try {
@@ -80,7 +119,7 @@ class AdminJugadores {
                     "${Tablas.TbJugadores.CHRGENERO} = '${jugador.chrGenero}'," +
                     "${Tablas.TbJugadores.CHRBRAZO} = '${jugador.chrBrazo}'," +
                     "${Tablas.TbJugadores.LNKFOTO} = '${jugador.lnkFoto}' " +
-                    "WHERE ${jugador.intId} = ${jugador.intId};"
+                    "WHERE ${Tablas.TbJugadores.INTID} = ${jugador.intId};"
             db.execSQL(qry)
             db.close()
         } catch (ex: Exception) {

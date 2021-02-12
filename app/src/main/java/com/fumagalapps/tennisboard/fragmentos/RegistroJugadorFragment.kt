@@ -14,10 +14,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.RadioButton
-import android.widget.Toast
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import com.fumagalapps.tennisboard.R
 import com.fumagalapps.tennisboard.interfaces.IComunicaFragmentos
@@ -25,6 +21,8 @@ import com.google.android.material.textfield.TextInputEditText
 
 import android.content.pm.PackageManager.*
 import android.provider.MediaStore
+import android.text.Editable
+import android.widget.*
 import com.fumagalapps.tennisboard.adapter.AdminJugadores
 import com.fumagalapps.tennisboard.model.TbJugadores
 import com.getbase.floatingactionbutton.FloatingActionButton
@@ -49,8 +47,10 @@ class RegistroJugadorFragment : Fragment() {
     lateinit var comunica: IComunicaFragmentos
     lateinit var actividad: Activity
     lateinit var edtNombre: TextInputEditText
+    lateinit var rdgGenero: RadioGroup
     lateinit var rdbMasculino: RadioButton
     lateinit var rdbFemenino: RadioButton
+    lateinit var rdgBrazo:RadioGroup
     lateinit var rdbDerecho: RadioButton
     lateinit var rdbIzquierdo: RadioButton
     lateinit var btnGaleria: Button
@@ -59,9 +59,9 @@ class RegistroJugadorFragment : Fragment() {
     lateinit var btnAtras: ImageButton
     lateinit var famMenAcc: FloatingActionsMenu
     lateinit var fabConfirmar: FloatingActionButton
-    lateinit var fabCancela: FloatingActionButton
     lateinit var fabBorra: FloatingActionButton
     lateinit var fabAgrega: FloatingActionButton
+    lateinit var imvFoto: ImageView
 
 
     var genero: Char = 'N'
@@ -72,8 +72,9 @@ class RegistroJugadorFragment : Fragment() {
     val REQUIERE_CAMERA = 1002
     var foto: Uri? = null
     var direccFoto: String? = null
-    var altajug = 0
+    var altajug = 1
 
+    var idJug: String? = "-1"
 
     val AdminJugador = AdminJugadores()
 
@@ -92,7 +93,10 @@ class RegistroJugadorFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val vista = inflater.inflate(R.layout.fragment_registro_jugadores, container, false)
+
         edtNombre = vista.findViewById(R.id.tie_Nombre)
+        rdgGenero = vista.findViewById(R.id.rdg_Genero)
+        rdgBrazo = vista.findViewById(R.id.rdg_Brazo)
         rdbMasculino = vista.findViewById(R.id.rdb_Masculino)
         rdbFemenino = vista.findViewById(R.id.rdb_Femenino)
         rdbDerecho = vista.findViewById(R.id.rdb_Derecho)
@@ -103,13 +107,29 @@ class RegistroJugadorFragment : Fragment() {
         btnAtras = vista.findViewById(R.id.imb_Atras)
         famMenAcc = vista.findViewById(R.id.fam_MenuAcciones)
         fabConfirmar = vista.findViewById(R.id.fab_Confirmar)
-        fabCancela = vista.findViewById(R.id.fab_Cancelar)
         fabBorra = vista.findViewById(R.id.fab_Borrar)
         fabAgrega = vista.findViewById(R.id.fab_Agregar)
+        imvFoto = vista.findViewById(R.id.imv_ItemFoto)
 
+        // atrapa el id del jugador en caso de venir de la lista de jugadores
+        // para hacer cambios
+
+        idJug = arguments?.getString("idJug", "-1")
+        if(idJug != null) {
+            altajug=0
+            val jugaCambio = AdminJugador.getName(idJug.toString())
+            edtNombre.setText(jugaCambio.strNombre)
+            imvFoto.setImageURI(Uri.parse(jugaCambio.lnkFoto.toString()))
+            direccFoto = jugaCambio.lnkFoto
+            if(jugaCambio.chrGenero=='F') rdgGenero.check(R.id.rdb_Femenino)
+            else rdgGenero.check(R.id.rdb_Masculino)
+            if(jugaCambio.chrBrazo=='D') rdgBrazo.check(R.id.rdb_Derecho)
+            else rdgBrazo.check(R.id.rdb_Izquierdo)
+        } else idJug = "-1"
 
         fabAgrega.setOnClickListener {
             // debe limpiar los campos y prender la bandera de dar de alta jugador
+            limpiaCampos()
             altajug = 1
             famMenAcc.collapse()
         }
@@ -119,21 +139,19 @@ class RegistroJugadorFragment : Fragment() {
             famMenAcc.collapse()
         }
 
-        fabCancela.setOnClickListener {
-            // cancela cualquier accion y limpia los datos
-            famMenAcc.collapse()
-        }
-
         fabConfirmar.setOnClickListener {
 
             if (valida_campos() == true) {
                 val jugador =
-                    TbJugadores(0, edtNombre.text.toString(), genero, brazo, direccFoto.toString())
+                    TbJugadores(idJug!!.toInt(), edtNombre.text.toString(), genero, brazo, direccFoto.toString())
                 if (altajug == 1)
                     AdminJugador.addJugador(jugador)
                 else
                     AdminJugador.updateJugador(jugador)
+                altajug=1
+                limpiaCampos()
             }
+
             famMenAcc.collapse()
         }
 
@@ -232,6 +250,16 @@ class RegistroJugadorFragment : Fragment() {
         }
 
 
+    }
+
+    // para limpiar todos los campos
+    fun limpiaCampos() {
+        edtNombre.text = null
+        rdg_Brazo.clearCheck()
+        rdg_Genero.clearCheck()
+        imv_ItemFoto.setImageURI(null)
+        direccFoto = null
+        idJug = "-1"
     }
 
     // checamos la respuesta a la solicitud de permiso por parte del usuario

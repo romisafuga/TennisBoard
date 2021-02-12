@@ -66,11 +66,6 @@ class AdminListJugador(
         }
 
         holder.itemView.setOnClickListener { v: View ->
-            Toast.makeText(
-                context,
-                "posicion: ${position} - ${holder.id.text}",
-                Toast.LENGTH_SHORT
-            ).show()
             comunicador.pasaJugador(holder.id.text.toString())
         }
     }

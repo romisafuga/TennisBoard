@@ -214,14 +214,6 @@
             app:fab_size="mini"></com.getbase.floatingactionbutton.FloatingActionButton>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_Cancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="?attr/colorPrimaryDark"
-            app:fab_icon="@mipmap/ic_confirmacion"
-            app:fab_size="mini"></com.getbase.floatingactionbutton.FloatingActionButton>
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_Borrar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
