@@ -21,8 +21,11 @@
     <string name="ald_jugadoresMes">indicate if you want to register a new tennis
         player or want to select an existing one\n\n
     You can also modify a tennis player from the select option</string>
+    <string name="ald_jugadoresMesBorrar">Are you sure you want to delete the player?</string>
     <string name="ald_jugadoresNeg">Register</string>
+    <string name="ald_jugadoresNegNo">No</string>
     <string name="ald_jugadoresPos">Select</string>
+    <string name="ald_jugadoresPosSi">Yes</string>
     <string name="txv_registrojug">tennis player registration</string>
     <string name="txv_modificajug">tennis player update</string>
     <string name="txv_listadojug">tennis player consultation</string>
@@ -43,7 +46,8 @@
     <string name="toa_error_foto">Photo is missing</string>
     <string name="toa_error_getallnames">There are no registered tennis players</string>
     <string name="toa_error_exgetallnames">List could not be retrieved</string>
-    <string name="pasajugador_error">Tennis Player is missing</string>
+    <string name="toa_pasajugador_error">Tennis Player is missing</string>
+    <string name="toa_obtenDatosVacioError">There is no data in the table</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

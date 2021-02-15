@@ -2,6 +2,7 @@ package com.fumagalapps.tennisboard.adapter
 
 import android.database.DatabaseUtils
 import android.widget.Toast
+import com.fumagalapps.tennisboard.R
 import com.fumagalapps.tennisboard.data.AppDBTennisBoard
 import com.fumagalapps.tennisboard.data.Tablas
 import com.fumagalapps.tennisboard.model.TbJugadores
@@ -38,14 +39,14 @@ class AdminJugadores {
                 registros.close()
             } else {
                 Toast.makeText(
-                    AppDBTennisBoard.CONTEXTO, "No hay datos en la tabla",
+                    AppDBTennisBoard.CONTEXTO, R.string.toa_obtenDatosVacioError ,
                     Toast.LENGTH_SHORT
                 ).show()
             }
             return nombres
         } catch (ex: Exception) {
             Toast.makeText(
-                AppDBTennisBoard.CONTEXTO, "No se pudo recuperar la lista",
+                AppDBTennisBoard.CONTEXTO, ex.toString(),
                 Toast.LENGTH_SHORT
             ).show()
             return nombres
@@ -76,14 +77,14 @@ class AdminJugadores {
                 registros.close()
             } else {
                 Toast.makeText(
-                    AppDBTennisBoard.CONTEXTO, "No hay datos en la tabla",
+                    AppDBTennisBoard.CONTEXTO, R.string.toa_obtenDatosVacioError,
                     Toast.LENGTH_SHORT
                 ).show()
                 return TbJugadores(0, "", ' ', ' ', "")
             }
         } catch (ex: Exception) {
             Toast.makeText(
-                AppDBTennisBoard.CONTEXTO, "No se pudo recuperar la lista",
+                AppDBTennisBoard.CONTEXTO, ex.toString(),
                 Toast.LENGTH_SHORT
             ).show()
             return TbJugadores(0, "", ' ', ' ', "")
@@ -104,11 +105,13 @@ class AdminJugadores {
             db.close()
         } catch (ex: Exception) {
             Toast.makeText(
-                AppDBTennisBoard.CONTEXTO!!, "No se pudo guardar el contacto",
+                AppDBTennisBoard.CONTEXTO!!, ex.toString(),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
+
+
 
     // Qry para actualizar jugadores
     fun updateJugador(jugador: TbJugadores) {
@@ -124,13 +127,13 @@ class AdminJugadores {
             db.close()
         } catch (ex: Exception) {
             Toast.makeText(
-                AppDBTennisBoard.CONTEXTO!!, "No se pudo guardar el contacto",
+                AppDBTennisBoard.CONTEXTO!!, ex.toString(),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
-    fun deleteContacto(numero: Int) {
+    fun deleteJugador(numero: Int) {
         try {
             val db = AppDBTennisBoard.DB!!.readableDatabase
             // checamos si hay datos guardados
@@ -152,19 +155,19 @@ class AdminJugadores {
 
                 } catch (ex: Exception) {
                     Toast.makeText(
-                        AppDBTennisBoard.CONTEXTO, "No se pudo eliminar el contacto",
+                        AppDBTennisBoard.CONTEXTO, ex.toString(),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             } else {
                 Toast.makeText(
-                    AppDBTennisBoard.CONTEXTO, "El jugador no existe",
+                    AppDBTennisBoard.CONTEXTO, R.string.toa_obtenDatosVacioError,
                     Toast.LENGTH_SHORT
                 ).show()
             }
         } catch (ex: Exception) {
             Toast.makeText(
-                AppDBTennisBoard.CONTEXTO, "No se pudo encontrar el contacto",
+                AppDBTennisBoard.CONTEXTO, ex.toString(),
                 Toast.LENGTH_SHORT
             ).show()
         }

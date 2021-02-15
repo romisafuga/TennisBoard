@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.fumagalapps.tennisboard.fragmentos.AjusteBotonesFragment
 import com.fumagalapps.tennisboard.fragmentos.InicioFragment
 import com.fumagalapps.tennisboard.fragmentos.InicioFragment.*
 import com.fumagalapps.tennisboard.fragmentos.ListadoJugadorFragment
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_inicio.*
 class MainActivity : AppCompatActivity(), IComunicaFragmentos {
 
     var contenedor = R.id.frl_ContenedorFrag
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -62,7 +64,11 @@ class MainActivity : AppCompatActivity(), IComunicaFragmentos {
     }
 
     override fun ajustes() {
-        Toast.makeText(this, "Ajuste ", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.beginTransaction().
+                replace(contenedor,AjusteBotonesFragment()).commit()
+        var conten : FrameLayout = findViewById(R.id.frl_ContenedorFrag)
+        Toast.makeText(this, conten.width.toString(), Toast.LENGTH_SHORT).show()
+
     }
 
     override fun estadJuego() {

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -23,6 +24,7 @@ import android.content.pm.PackageManager.*
 import android.provider.MediaStore
 import android.text.Editable
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.fumagalapps.tennisboard.adapter.AdminJugadores
 import com.fumagalapps.tennisboard.model.TbJugadores
 import com.getbase.floatingactionbutton.FloatingActionButton
@@ -50,7 +52,7 @@ class RegistroJugadorFragment : Fragment() {
     lateinit var rdgGenero: RadioGroup
     lateinit var rdbMasculino: RadioButton
     lateinit var rdbFemenino: RadioButton
-    lateinit var rdgBrazo:RadioGroup
+    lateinit var rdgBrazo: RadioGroup
     lateinit var rdbDerecho: RadioButton
     lateinit var rdbIzquierdo: RadioButton
     lateinit var btnGaleria: Button
@@ -115,15 +117,15 @@ class RegistroJugadorFragment : Fragment() {
         // para hacer cambios
 
         idJug = arguments?.getString("idJug", "-1")
-        if(idJug != null) {
-            altajug=0
+        if (idJug != null) {
+            altajug = 0
             val jugaCambio = AdminJugador.getName(idJug.toString())
             edtNombre.setText(jugaCambio.strNombre)
             imvFoto.setImageURI(Uri.parse(jugaCambio.lnkFoto.toString()))
             direccFoto = jugaCambio.lnkFoto
-            if(jugaCambio.chrGenero=='F') rdgGenero.check(R.id.rdb_Femenino)
+            if (jugaCambio.chrGenero == 'F') rdgGenero.check(R.id.rdb_Femenino)
             else rdgGenero.check(R.id.rdb_Masculino)
-            if(jugaCambio.chrBrazo=='D') rdgBrazo.check(R.id.rdb_Derecho)
+            if (jugaCambio.chrBrazo == 'D') rdgBrazo.check(R.id.rdb_Derecho)
             else rdgBrazo.check(R.id.rdb_Izquierdo)
         } else idJug = "-1"
 
@@ -136,19 +138,26 @@ class RegistroJugadorFragment : Fragment() {
 
         fabBorra.setOnClickListener {
             // eliminara el registro seleccionado
-            famMenAcc.collapse()
+            ejecutaBorrarJug().show()
+
         }
 
         fabConfirmar.setOnClickListener {
 
             if (valida_campos() == true) {
                 val jugador =
-                    TbJugadores(idJug!!.toInt(), edtNombre.text.toString(), genero, brazo, direccFoto.toString())
+                    TbJugadores(
+                        idJug!!.toInt(),
+                        edtNombre.text.toString(),
+                        genero,
+                        brazo,
+                        direccFoto.toString()
+                    )
                 if (altajug == 1)
                     AdminJugador.addJugador(jugador)
                 else
                     AdminJugador.updateJugador(jugador)
-                altajug=1
+                altajug = 1
                 limpiaCampos()
             }
 
@@ -208,6 +217,29 @@ class RegistroJugadorFragment : Fragment() {
             actividad = context
             comunica = actividad as IComunicaFragmentos
         }
+    }
+
+    fun ejecutaBorrarJug(): AlertDialog {
+        var builder = AlertDialog.Builder(context!!)
+        builder.setTitle(R.string.ald_jugadoresTit)
+            .setMessage(R.string.ald_jugadoresMesBorrar)
+            .setNegativeButton(R.string.ald_jugadoresNegNo,
+                DialogInterface.OnClickListener
+                { dialog,
+                  which ->
+                    limpiaCampos()
+                    famMenAcc.collapse()
+                })
+            .setPositiveButton(R.string.ald_jugadoresPosSi,
+                DialogInterface.OnClickListener
+                { dialog,
+                  which ->
+                    AdminJugador.deleteJugador(idJug!!.toInt())
+                    limpiaCampos()
+                    famMenAcc.collapse()
+                })
+        builder.setCancelable(false)
+        return builder.create()
     }
 
     fun valida_campos(): Boolean {
