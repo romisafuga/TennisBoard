@@ -50,4 +50,11 @@
     <string name="toa_obtenDatosVacioError">There is no data in the table</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Golpes de tenis -->
+    <string name="hit_derecha">Drive</string>
+    <string name="hit_reves">BackHand</string>
+    <string name="hit_saque">Service</string>
+    <string name="hit_volea">Volley</string>
+    <string name="hit_Passhot">Pass.Shot</string>
+    
 </resources>

@@ -10,6 +10,9 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.fumagalapps.tennisboard.R
 import kotlinx.android.synthetic.main.fragment_ajuste_botones.*
+import kotlinx.android.synthetic.main.fragment_ajuste_botones.view.*
+import kotlin.math.roundToInt
+import kotlin.properties.Delegates
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,9 +43,7 @@ class AjusteBotonesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var vista = inflater.inflate(R.layout.fragment_ajuste_botones, container, false)
-        //var lny : LinearLayout = lny_Principal
-        //Toast.makeText(context, lny.width.toString(), Toast.LENGTH_SHORT).show()
-        return vista
+         return vista
     }
 
     companion object {

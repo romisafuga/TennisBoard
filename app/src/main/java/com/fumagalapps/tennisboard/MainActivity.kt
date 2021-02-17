@@ -4,6 +4,8 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -36,17 +38,19 @@ class MainActivity : AppCompatActivity(), IComunicaFragmentos {
 
         var builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.ald_jugadoresTit)
-                .setMessage(R.string.ald_jugadoresMes)
-                .setNegativeButton(R.string.ald_jugadoresNeg,
-                        DialogInterface.OnClickListener { dialog,
-                                                          which ->
-                            supportFragmentManager.beginTransaction().
-                            replace(contenedor, RegistroJugadorFragment()).commit()})
-                .setPositiveButton(R.string.ald_jugadoresPos,
-                        DialogInterface.OnClickListener { dialog,
-                                                          which ->
-                            supportFragmentManager.beginTransaction().
-                            replace(contenedor, ListadoJugadorFragment()).commit()})
+            .setMessage(R.string.ald_jugadoresMes)
+            .setNegativeButton(R.string.ald_jugadoresNeg,
+                DialogInterface.OnClickListener { dialog,
+                                                  which ->
+                    supportFragmentManager.beginTransaction()
+                        .replace(contenedor, RegistroJugadorFragment()).commit()
+                })
+            .setPositiveButton(R.string.ald_jugadoresPos,
+                DialogInterface.OnClickListener { dialog,
+                                                  which ->
+                    supportFragmentManager.beginTransaction()
+                        .replace(contenedor, ListadoJugadorFragment()).commit()
+                })
         return builder.create()
     }
 
@@ -64,12 +68,13 @@ class MainActivity : AppCompatActivity(), IComunicaFragmentos {
     }
 
     override fun ajustes() {
-        supportFragmentManager.beginTransaction().
-                replace(contenedor,AjusteBotonesFragment()).commit()
-        var conten : FrameLayout = findViewById(R.id.frl_ContenedorFrag)
-        Toast.makeText(this, conten.width.toString(), Toast.LENGTH_SHORT).show()
+        var conten: FrameLayout = findViewById(R.id.frl_ContenedorFrag)
+        val transAjus = this.supportFragmentManager.beginTransaction()
+        val AjusteFrag = AjusteBotonesFragment()
+         transAjus.replace(contenedor, AjusteFrag).commit()
 
     }
+
 
     override fun estadJuego() {
         Toast.makeText(this, "estadisticas Juego ", Toast.LENGTH_SHORT).show()
@@ -89,11 +94,11 @@ class MainActivity : AppCompatActivity(), IComunicaFragmentos {
 
     override fun pasaJugador(idJug: String) {
         val bundle = Bundle()
-        bundle.putString("idJug",idJug)
+        bundle.putString("idJug", idJug)
         val transEditJug = this.supportFragmentManager.beginTransaction()
         val RegJugFrag = RegistroJugadorFragment()
         RegJugFrag.arguments = bundle
-        transEditJug.replace(contenedor,RegJugFrag).commit()
+        transEditJug.replace(contenedor, RegJugFrag).commit()
     }
 
 }
