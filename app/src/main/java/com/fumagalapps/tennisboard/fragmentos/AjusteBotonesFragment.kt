@@ -1,18 +1,25 @@
 package com.fumagalapps.tennisboard.fragmentos
 
+import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.fumagalapps.tennisboard.Helper.MyItemTouchHelperCallBack
+import com.fumagalapps.tennisboard.Helper.OnEmpezarDragListener
 import com.fumagalapps.tennisboard.R
-import kotlinx.android.synthetic.main.fragment_ajuste_botones.*
-import kotlinx.android.synthetic.main.fragment_ajuste_botones.view.*
-import kotlin.math.roundToInt
-import kotlin.properties.Delegates
+import com.fumagalapps.tennisboard.adapter.DragAdaptadorGolpes
+import com.fumagalapps.tennisboard.data.DataGolpes
+import com.fumagalapps.tennisboard.model.TipoGolpes
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +35,13 @@ class AjusteBotonesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var itemTouchHelper: ItemTouchHelper?=null
+
+    //lateinit var comunica: IComunicaFragmentos
+    //lateinit var btnAtras: ImageButton
+    lateinit var actividad: Activity
+    lateinit var areaReciclada: RecyclerView
+    lateinit var listHits : MutableList<TipoGolpes>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +57,46 @@ class AjusteBotonesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var vista = inflater.inflate(R.layout.fragment_ajuste_botones, container, false)
+
+        //btnAtras = vista.findViewById(R.id.imb_Atras)
+        areaReciclada = vista.findViewById(R.id.rcv_golpes)
+
+        val manager  = LinearLayoutManager(actividad)
+        manager.orientation = LinearLayoutManager.HORIZONTAL
+        areaReciclada.layoutManager = manager
+        areaReciclada.setHasFixedSize(true)
+
+        listHits = DataGolpes().cargaGolpes()
+
+        val itemAdapter = DragAdaptadorGolpes(actividad, listHits, object : OnEmpezarDragListener {
+            override fun onEmpezarDrag(viewHolder: RecyclerView.ViewHolder?) {
+                itemTouchHelper!!.startDrag(viewHolder!!)
+            }
+        })
+
+
+        areaReciclada.adapter = itemAdapter
+
+        val dividerItemDecoration = DividerItemDecoration(actividad , manager.orientation)
+        areaReciclada.addItemDecoration(dividerItemDecoration)
+
+// Setup ItemTouchHelper
+        val callback = MyItemTouchHelperCallBack(itemAdapter)
+        itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper!!.attachToRecyclerView(areaReciclada)
+
          return vista
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is Activity) {
+            actividad = context
+           // comunica = actividad as IComunicaFragmentos
+        }
+    }
+
+
 
     companion object {
         /**
@@ -65,4 +117,8 @@ class AjusteBotonesFragment : Fragment() {
                 }
             }
     }
+
+
+
+
 }

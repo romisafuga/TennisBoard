@@ -51,6 +51,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Golpes de tenis -->
+    <string name="hit_titulo">Button Setting</string>
+    <string name="hit_intruccion">Drag and Drop</string>
     <string name="hit_derecha">Drive</string>
     <string name="hit_reves">BackHand</string>
     <string name="hit_saque">Service</string>

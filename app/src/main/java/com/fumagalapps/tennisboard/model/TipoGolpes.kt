@@ -7,9 +7,9 @@ import androidx.annotation.StringRes
 
 @SuppressLint("SupportAnnotationUsage")
 data class TipoGolpes(
-    @StringRes val golpe: Int,
-    @DrawableRes val letraImagen: Int,
-    val idGolpe: Int
+    @StringRes var golpe: Int,
+    @DrawableRes var letraImagen: Int,
+    var idGolpe: Int
 ) {
 
 }
