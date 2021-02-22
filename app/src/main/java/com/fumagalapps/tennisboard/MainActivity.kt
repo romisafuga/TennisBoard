@@ -1,6 +1,8 @@
 package com.fumagalapps.tennisboard
 
+import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -20,6 +22,8 @@ import kotlinx.android.synthetic.main.fragment_inicio.*
 class MainActivity : AppCompatActivity(), IComunicaFragmentos {
 
     var contenedor = R.id.frl_ContenedorFrag
+    lateinit var sharPref: SharedPreferences
+    var ordenBotones: String = "12345"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +31,16 @@ class MainActivity : AppCompatActivity(), IComunicaFragmentos {
 
         // asignacion de fragmento al contenedor
 
-
+        cargarPreferencia()
         supportFragmentManager.beginTransaction().replace(contenedor, InicioFragment()).commit()
 
     }
 
+    // cargar las preferencias del orden de los botones
+    fun cargarPreferencia() {
+        sharPref = getSharedPreferences("TennisBoardPreferences", Context.MODE_PRIVATE)
+        ordenBotones = sharPref.getString("ordenBotones","12345").toString()
+    }
 
     // funcion para crear un AlertDialogo y regresarlo
     fun dialogoJugadores(): AlertDialog {
@@ -68,10 +77,12 @@ class MainActivity : AppCompatActivity(), IComunicaFragmentos {
     }
 
     override fun ajustes() {
-        var conten: FrameLayout = findViewById(R.id.frl_ContenedorFrag)
+        val bundle = Bundle()
+        bundle.putString("ordenBotones", ordenBotones)
         val transAjus = this.supportFragmentManager.beginTransaction()
         val AjusteFrag = AjusteBotonesFragment()
-         transAjus.replace(contenedor, AjusteFrag).commit()
+        AjusteFrag.arguments = bundle
+        transAjus.replace(contenedor, AjusteFrag).commit()
 
     }
 

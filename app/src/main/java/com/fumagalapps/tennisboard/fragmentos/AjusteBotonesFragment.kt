@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,10 +39,14 @@ class AjusteBotonesFragment : Fragment() {
     private var itemTouchHelper: ItemTouchHelper?=null
 
     //lateinit var comunica: IComunicaFragmentos
-    //lateinit var btnAtras: ImageButton
+    lateinit var btnAtras: ImageButton
     lateinit var actividad: Activity
     lateinit var areaReciclada: RecyclerView
     lateinit var listHits : MutableList<TipoGolpes>
+
+    var ordenBotones : String? = ""
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,15 +63,17 @@ class AjusteBotonesFragment : Fragment() {
         // Inflate the layout for this fragment
         var vista = inflater.inflate(R.layout.fragment_ajuste_botones, container, false)
 
-        //btnAtras = vista.findViewById(R.id.imb_Atras)
+        btnAtras = vista.findViewById(R.id.imb_Atras)
         areaReciclada = vista.findViewById(R.id.rcv_golpes)
 
         val manager  = LinearLayoutManager(actividad)
         manager.orientation = LinearLayoutManager.HORIZONTAL
         areaReciclada.layoutManager = manager
         areaReciclada.setHasFixedSize(true)
+        // recuperar el orden de los golpes de la pantalla principal
+        ordenBotones= arguments?.getString("ordenBotones", "-1")
 
-        listHits = DataGolpes().cargaGolpes()
+        listHits = DataGolpes().cargaGolpes(ordenBotones!!)
 
         val itemAdapter = DragAdaptadorGolpes(actividad, listHits, object : OnEmpezarDragListener {
             override fun onEmpezarDrag(viewHolder: RecyclerView.ViewHolder?) {
@@ -81,7 +88,7 @@ class AjusteBotonesFragment : Fragment() {
         areaReciclada.addItemDecoration(dividerItemDecoration)
 
 // Setup ItemTouchHelper
-        val callback = MyItemTouchHelperCallBack(itemAdapter)
+        val callback = MyItemTouchHelperCallBack(itemAdapter,actividad)
         itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper!!.attachToRecyclerView(areaReciclada)
 

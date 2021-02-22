@@ -2,13 +2,21 @@ package com.fumagalapps.tennisboard.Helper
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Canvas
+import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.fumagalapps.tennisboard.adapter.DragAdaptadorGolpes
+import kotlinx.android.synthetic.main.item_lista_golpes.view.*
+import kotlin.coroutines.coroutineContext
 
-class MyItemTouchHelperCallBack(private val adaptador: IItemTouchHelperAdaptador) :
+class MyItemTouchHelperCallBack(
+    private val adaptador: IItemTouchHelperAdaptador,
+    private val context: Context
+) :
     ItemTouchHelper.Callback() {
     companion object {
         const val ALPHA_FULL = 1.0f
@@ -82,6 +90,21 @@ class MyItemTouchHelperCallBack(private val adaptador: IItemTouchHelperAdaptador
             val itemViewHolder = viewHolder as IItemTouchHelperVistaHolder
             itemViewHolder.onItemLimpiar()
         }
+        var xx: RecyclerView.ViewHolder?
+        var ordenBoton: String = ""
+
+        for (i in 0..recyclerView.adapter!!.itemCount - 1) {
+            xx = recyclerView.findViewHolderForAdapterPosition(i)
+            ordenBoton = ordenBoton + xx!!.itemView.txv_ClaveGolpe.text.toString()
+        }
+
+        var sp: SharedPreferences =
+            context.getSharedPreferences("TennisBoardPreferences", Context.MODE_PRIVATE)
+        var editor : SharedPreferences.Editor = sp.edit()
+        editor.putString("ordenBotones",ordenBoton)
+        editor.commit()
+
+
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
@@ -90,6 +113,7 @@ class MyItemTouchHelperCallBack(private val adaptador: IItemTouchHelperAdaptador
                 val itemViewHolder = viewHolder as IItemTouchHelperVistaHolder
                 itemViewHolder.onItemSeleccionado()
             }
+
         }
         super.onSelectedChanged(viewHolder, actionState)
     }
