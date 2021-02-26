@@ -163,6 +163,10 @@ class RegistroJugadorFragment : Fragment() {
 
             famMenAcc.collapse()
         }
+        // boton de regresar página
+        btnAtras.setOnClickListener {
+            comunica.muestraMenu()
+        }
 
         // detectar el boton cuando se pulse para abrir galeria
         btnGaleria.setOnClickListener {

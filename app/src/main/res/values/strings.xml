@@ -48,8 +48,6 @@
     <string name="toa_error_exgetallnames">List could not be retrieved</string>
     <string name="toa_pasajugador_error">Tennis Player is missing</string>
     <string name="toa_obtenDatosVacioError">There is no data in the table</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Golpes de tenis -->
     <string name="hit_titulo">Button Setting</string>
     <string name="hit_intruccion">Drag and Drop</string>
@@ -58,5 +56,14 @@
     <string name="hit_saque">Service</string>
     <string name="hit_volea">Volley</string>
     <string name="hit_Passhot">Pass.Shot</string>
-    
+    <!-- Juego Nuevo  -->
+    <string name="tit_juegoNuevo">New Game</string>
+    <string name="tit_juegoNuevoAbajo">Settings</string>
+    <string name="btn_jugador1">Select Player 1</string>
+    <string name="btn_jugador2">Select Player 2</string>
+    <string name="txv_sets">How Many Sets</string>
+    <string name="txv_tiebreak">Points last tiebreak</string>
+    <string name="ald_JuegoMesFalta">At least 2 players are required\nto create a game</string>
+    <string name="ald_Ok">Ok</string>
+
 </resources>

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Contract
 
 class AdminJugadores {
     // Qry para regresar los nombres de los contactos
-    fun getAllNames(): ArrayList<TbJugadores> {
+    fun getAllNames(): MutableList<TbJugadores> {
         val nombres = arrayListOf<TbJugadores>()
         try {
             val db = AppDBTennisBoard.DB!!.readableDatabase
@@ -50,6 +50,22 @@ class AdminJugadores {
                 Toast.LENGTH_SHORT
             ).show()
             return nombres
+        }
+    }
+
+    // cuenta cuantos jugadores hay
+    fun cuentaJugadores(): Int {
+        try {
+            val db = AppDBTennisBoard.DB!!.readableDatabase
+            // checamos si hay datos guardados
+            val numDatos = DatabaseUtils.queryNumEntries(db, AppDBTennisBoard.TB_Jugadores).toInt()
+            return numDatos
+        } catch (ex: Exception) {
+            Toast.makeText(
+                AppDBTennisBoard.CONTEXTO, ex.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
+            return 0
         }
     }
 

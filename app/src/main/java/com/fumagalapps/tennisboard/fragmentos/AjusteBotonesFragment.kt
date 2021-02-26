@@ -18,6 +18,7 @@ import com.fumagalapps.tennisboard.Helper.OnEmpezarDragListener
 import com.fumagalapps.tennisboard.R
 import com.fumagalapps.tennisboard.adapter.DragAdaptadorGolpes
 import com.fumagalapps.tennisboard.data.DataGolpes
+import com.fumagalapps.tennisboard.interfaces.IComunicaFragmentos
 import com.fumagalapps.tennisboard.model.TipoGolpes
 
 
@@ -38,7 +39,7 @@ class AjusteBotonesFragment : Fragment() {
     private var param2: String? = null
     private var itemTouchHelper: ItemTouchHelper?=null
 
-    //lateinit var comunica: IComunicaFragmentos
+    lateinit var comunica: IComunicaFragmentos
     lateinit var btnAtras: ImageButton
     lateinit var actividad: Activity
     lateinit var areaReciclada: RecyclerView
@@ -92,6 +93,9 @@ class AjusteBotonesFragment : Fragment() {
         itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper!!.attachToRecyclerView(areaReciclada)
 
+        btnAtras.setOnClickListener {
+            comunica.muestraMenu()
+        }
          return vista
     }
 
@@ -99,7 +103,7 @@ class AjusteBotonesFragment : Fragment() {
         super.onAttach(context)
         if (context is Activity) {
             actividad = context
-           // comunica = actividad as IComunicaFragmentos
+            comunica = actividad as IComunicaFragmentos
         }
     }
 

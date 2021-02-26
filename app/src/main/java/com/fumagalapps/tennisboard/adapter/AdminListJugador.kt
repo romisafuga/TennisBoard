@@ -25,7 +25,8 @@ import com.fumagalapps.tennisboard.interfaces.IComunicaFragmentos
 
 class AdminListJugador(
     private val context: Context,
-    private val dataset: List<TbJugadores>
+    private val dataset: List<TbJugadores>,
+    private val JugPosicion: Int
 ) : RecyclerView.Adapter<AdminListJugador.ItemViewHolder>(), View.OnClickListener {
     // referncia a las vistas de cada elemento
 
@@ -66,7 +67,12 @@ class AdminListJugador(
         }
 
         holder.itemView.setOnClickListener { v: View ->
-            comunicador.pasaJugador(holder.id.text.toString())
+            comunicador.pasaJugador(
+                holder.id.text.toString(),
+                JugPosicion,
+                holder.nombre.text.toString(),
+                item.lnkFoto
+            )
         }
     }
 

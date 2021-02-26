@@ -39,6 +39,10 @@ class ListadoJugadorFragment : Fragment() {
     lateinit var actividad: Activity
     lateinit var areaReciclada: RecyclerView
 
+    var JugPosicion: Int? = 0
+    var idJug1: String? = ""
+    var idJug2: String? = ""
+
     val adminJugador = AdminJugadores()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +58,12 @@ class ListadoJugadorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        //recupero valor de posicion de jugador para saber si viene de juego nuevo
+        JugPosicion = arguments?.getInt("JugPosicion", 0)
+        idJug1 = arguments?.getString("idJug1", "")
+        idJug2 = arguments?.getString("idJug2", "")
+
+        if (JugPosicion == null) JugPosicion = 0
         // Inflate the layout for this fragment
 
         var vista = inflater.inflate(R.layout.fragment_listado_jugador, container, false)
@@ -67,9 +77,23 @@ class ListadoJugadorFragment : Fragment() {
 
         // llenar el adaptador con los jugadores
         val misDatos = adminJugador.getAllNames()
-        areaReciclada.adapter = AdminListJugador(actividad,misDatos)
+        // eliminar los jugadores ya seleccionados para jugar
+        // esto aplica para la pantalla de juego nuevo solamente
+        for (i in 0..misDatos.size - 1) {
+            if ((JugPosicion == 1 && idJug2 == misDatos[i].intId.toString()) ||
+                (JugPosicion == 2 && idJug1 == misDatos[i].intId.toString())
+            ) {
+                misDatos.removeAt(i)
+                break
+            }
+        }
 
+        areaReciclada.adapter = AdminListJugador(actividad, misDatos, JugPosicion!!)
 
+        btnAtras.setOnClickListener {
+            if (JugPosicion == 0)
+                comunica.muestraMenu()
+        }
 
         return vista
     }
